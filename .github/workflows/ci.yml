@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  testes:
+    name: Testes automatizados
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Verificar TypeScript
+        run: npm run typecheck
+
+      - name: Executar testes
+        run: npm test
+
+  terraform:
+    name: Validacao Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8.5"
+
+      - name: Verificar formatacao
+        working-directory: infra/terraform
+        run: terraform fmt -check
+
+      - name: Inicializar Terraform
+        working-directory: infra/terraform
+        run: terraform init -backend=false
+
+      - name: Validar Terraform
+        working-directory: infra/terraform
+        run: terraform validate
