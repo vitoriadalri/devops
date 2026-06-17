@@ -5,7 +5,6 @@ Repositorio de exemplo para o projeto DevOps, contemplando CI/CD, testes automat
 ## Conteudo
 
 - Documentacao da fase 1 em `docs/trabalho_fase1.md`
-- Relatorio da fase 2 em `docs/trabalho_fase2.md`
 - Pipeline de CI/CD em `.github/workflows/ci.yml`
 - Testes automatizados em `tests/`
 - Containerizacao em `Dockerfile` e `docker-compose.yml`
