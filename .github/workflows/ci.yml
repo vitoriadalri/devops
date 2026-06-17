@@ -31,6 +31,9 @@ jobs:
       - name: Executar testes
         run: npm test
 
+      - name: Auditoria de seguranca
+        run: npm audit --audit-level=high
+
   terraform:
     name: Validacao Terraform
     runs-on: ubuntu-latest
@@ -55,3 +58,55 @@ jobs:
       - name: Validar Terraform
         working-directory: infra/terraform
         run: terraform validate
+
+  entrega-continua:
+    name: Build e publicacao da imagem Docker
+    runs-on: ubuntu-latest
+    needs:
+      - testes
+      - terraform
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Baixar codigo
+        uses: actions/checkout@v4
+
+      - name: Login no GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Gerar metadados da imagem
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest
+            type=sha
+
+      - name: Build e push da imagem
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    name: Deploy usando container
+    runs-on: ubuntu-latest
+    needs: entrega-continua
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Registrar entrega
+        run: |
+          echo "Imagem publicada em ghcr.io/${{ github.repository }}:latest"
+          echo "Deploy pode ser realizado com Docker Compose ou ambiente de orquestracao configurado."
