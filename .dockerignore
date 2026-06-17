@@ -1,0 +1,8 @@
+node_modules
+dist
+.npm-cache
+.git
+.github
+docs
+infra
+npm-debug.log*

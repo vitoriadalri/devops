@@ -1,13 +1,16 @@
-# Projeto DevOps - Fase 1
+# Projeto DevOps
 
-Repositório de exemplo para a fase 1 do projeto: Configuração e Automação Inicial.
+Repositorio de exemplo para o projeto DevOps, contemplando CI/CD, testes automatizados, containerizacao com Docker e infraestrutura como codigo com Terraform.
 
-## Conteúdo
+## Conteudo
 
-- Documentação de planejamento em `docs/trabalho_fase1.md`
-- Pipeline de CI em `.github/workflows/ci.yml`
+- Documentacao da fase 1 em `docs/trabalho_fase1.md`
+- Relatorio da fase 2 em `docs/trabalho_fase2.md`
+- Pipeline de CI/CD em `.github/workflows/ci.yml`
 - Testes automatizados em `tests/`
-- Scripts de infraestrutura como código em `infra/terraform/`
+- Containerizacao em `Dockerfile` e `docker-compose.yml`
+- Scripts de deploy em `scripts/`
+- Scripts de infraestrutura como codigo em `infra/terraform/`
 
 ## Como executar os testes
 
@@ -22,6 +25,32 @@ npm test
 npm run typecheck
 ```
 
+## Como executar a aplicacao
+
+```powershell
+npm run build
+npm start
+```
+
+A aplicacao ficara disponivel em:
+
+```text
+http://localhost:3000
+http://localhost:3000/health
+```
+
+## Como executar com Docker
+
+```powershell
+docker compose up --build -d
+```
+
+Ou:
+
+```powershell
+.\scripts\deploy.ps1
+```
+
 ## Como validar o Terraform
 
 ```powershell
@@ -31,8 +60,6 @@ terraform init
 terraform validate
 ```
 
-## Link do repositório
+## Link do repositorio
 
-Substitua este endereço pelo link real após criar o repositório no GitHub:
-
-https://github.com/vitoriadalri/devops-fase1
+https://github.com/vitoriadalri/devops

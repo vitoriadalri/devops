@@ -1,11 +1,12 @@
 {
   "name": "devops-fase1",
   "version": "1.0.0",
-  "description": "Projeto DevOps fase 1 com Node.js, TypeScript, CI, testes automatizados e Terraform.",
+  "description": "Projeto DevOps com Node.js, TypeScript, CI/CD, testes automatizados, Docker e Terraform.",
   "type": "module",
   "private": true,
   "scripts": {
     "build": "tsc --noEmit false",
+    "start": "node dist/src/main.js",
     "test": "npm run build && node --test dist/tests/*.test.js",
     "typecheck": "tsc --noEmit"
   },
