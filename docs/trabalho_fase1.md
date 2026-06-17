@@ -37,9 +37,8 @@ O projeto foi estruturado para atender aos principais conceitos estudados nas au
 
 Repositorio do projeto:
 
-https://github.com/vitoriadalri/devops-fase1
+https://github.com/vitoriadalri/devops
 
-Observacao: apos criar o repositorio no GitHub, substitua o link acima pelo endereco real.
 
 ## b) Plano de Integracao Continua
 
